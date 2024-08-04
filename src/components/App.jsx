@@ -6,6 +6,7 @@ import Notodos from "./Notodos";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import useLocalStorage from "../hooks/useLocalStorage";
+import {TodosContext} from "../context/TodosContext";
 
 function App() {
   const [todos,setTodos] = useLocalStorage('todos',[
@@ -55,15 +56,7 @@ function App() {
   const [name,setName] = useLocalStorage('name','');
 
   const nameInputEl = useRef();
-  function addTodo(todo) {
-    setTodos([...todos, {
-      id: idForTodo,
-      title: todo,
-      isComplete: false,
-      isEditing: false
-    }]);
-    setIdForTodo(prevIdForTodo => prevIdForTodo + 1);
-  }
+
 
 
   function deleteTodo(id) {
@@ -167,7 +160,8 @@ function App() {
   }, [todos]);
 
   return (
-      <div className="todo-app-container">
+      <TodosContext.Provider value={{todos,setTodos,idForTodo,setIdForTodo}}>
+        <div className="todo-app-container">
         <div className="todo-app">
           <div className="name-container">
             <h2>What is your name?</h2>
@@ -185,7 +179,7 @@ function App() {
 
           </div>
           <h2>Todo App</h2>
-          <TodoForm addTodo={addTodo}/>
+          <TodoForm/>
           {todos.length > 0 ? (
               <TodoList
                   todos={todos}
@@ -204,6 +198,7 @@ function App() {
           )}
         </div>
       </div>
+      </TodosContext.Provider>
   );
 }
 
