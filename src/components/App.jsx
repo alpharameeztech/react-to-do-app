@@ -1,6 +1,6 @@
 import './reset.css';
 import './App.css';
-import {useEffect, useMemo, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import './Notodos';
 import Notodos from "./Notodos";
 import TodoForm from "./TodoForm";
@@ -49,6 +49,8 @@ function App() {
   //     isEditing: false,
   //   },
   // ]);
+
+  const [filter,setFilter] = useState('all');
 
   const [idForTodo, setIdForTodo] = useLocalStorage('idForTodo',4);
 
@@ -112,7 +114,7 @@ function App() {
     setTodos(updatedTodos);
   }
 
-  function todosFiltered(filter){
+  function todosFiltered(){
     if(filter === 'all'){
       return todos;
     }else if(filter === 'active'){
@@ -142,7 +144,15 @@ function App() {
   }, [todos]);
 
   return (
-      <TodosContext.Provider value={{todos,setTodos,idForTodo,setIdForTodo}}>
+      <TodosContext.Provider value={{
+        todos,
+        setTodos,
+        idForTodo,
+        setIdForTodo,
+        todosFiltered,
+        filter,
+        setFilter
+      }}>
         <div className="todo-app-container">
         <div className="todo-app">
           <div className="name-container">
@@ -170,7 +180,6 @@ function App() {
                   updateTodo={updateTodo}
                   cancelEdit={cancelEdit}
                   deleteTodo={deleteTodo}
-                  todosFiltered={todosFiltered}
               />
           ) : (
               <Notodos />

@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import PropTypes from "prop-types";
 import TodoItemsRemaining from "./TodoItemsRemaining";
 import TodoClearCompleted from "./TodoClearCompleted";
 import CompleteAllTodos from "./CompleteAllTodos";
 import TodoFilters from "./TodoFilters";
 import useToggle from "../hooks/useToggle";
+import {TodosContext} from "../context/TodosContext";
 
  TodoList.prototype = {
     todos: PropTypes.array.isRequired,
@@ -13,17 +14,16 @@ import useToggle from "../hooks/useToggle";
     updateTodo: PropTypes.func.isRequired,
     cancelEdit: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
-    todosFiltered: PropTypes.func.isRequired,
 }
 function TodoList(props) {
-    const [filter,setFilter] = useState('all')
     const [isFeatureOneVisible,setFeatureOneVisible] = useToggle();
-    const [isFeatureTwoVisible,setFeatureTwoVisible] = useToggle(false);
+    const [isFeatureTwoVisible,setFeatureTwoVisible] = useToggle();
+    const {todosFiltered} = useContext(TodosContext)
 
   return (
       <>
         <ul className="todo-list">
-          {props.todosFiltered(filter).map((todo) => (
+          {todosFiltered().map((todo) => (
               <li key={todo.id} className="todo-item-container">
                 <div className="todo-item">
                   <input
@@ -92,11 +92,7 @@ function TodoList(props) {
 
           { isFeatureTwoVisible && (
             <div className="other-buttons-container">
-                <TodoFilters
-                filter={filter}
-                setFilter={setFilter}
-                todosFiltered={props.todosFiltered}
-                />
+                <TodoFilters />
               <div>
                   <TodoClearCompleted />
               </div>
