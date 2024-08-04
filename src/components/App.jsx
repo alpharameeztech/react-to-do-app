@@ -112,11 +112,6 @@ function App() {
     setTodos(updatedTodos);
   }
 
-  const remaining = useMemo(remainingCalculation,[todos]);
-  function remainingCalculation(){
-    return todos.filter(todo => !todo.isComplete).length
-  }
-
   function clearCompleted(){
     setTodos([...todos].filter(todo => !todo.isComplete))
   }
@@ -188,7 +183,6 @@ function App() {
                   updateTodo={updateTodo}
                   cancelEdit={cancelEdit}
                   deleteTodo={deleteTodo}
-                  remaining={remaining}
                   clearCompleted={clearCompleted}
                   completeAllTodos={completeAllTodos}
                   todosFiltered={todosFiltered}
