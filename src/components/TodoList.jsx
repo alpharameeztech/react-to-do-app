@@ -14,7 +14,6 @@ import useToggle from "../hooks/useToggle";
     cancelEdit: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
     clearCompleted: PropTypes.func.isRequired,
-    completeAllTodos: PropTypes.func.isRequired,
     todosFiltered: PropTypes.func.isRequired,
 }
 function TodoList(props) {
@@ -86,7 +85,7 @@ function TodoList(props) {
           { isFeatureOneVisible && (
             <div className="check-all-container">
               <div>
-                <CompleteAllTodos completeAllTodos={props.completeAllTodos}/>
+                <CompleteAllTodos />
               </div>
                 <TodoItemsRemaining />
             </div>
