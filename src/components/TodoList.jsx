@@ -1,5 +1,4 @@
-import React, {useContext, useState} from 'react'
-import PropTypes from "prop-types";
+import React, {useContext} from 'react'
 import TodoItemsRemaining from "./TodoItemsRemaining";
 import TodoClearCompleted from "./TodoClearCompleted";
 import CompleteAllTodos from "./CompleteAllTodos";
@@ -7,18 +6,63 @@ import TodoFilters from "./TodoFilters";
 import useToggle from "../hooks/useToggle";
 import {TodosContext} from "../context/TodosContext";
 
- TodoList.prototype = {
-    todos: PropTypes.array.isRequired,
-    completeTodo: PropTypes.func.isRequired,
-    markAsEditing: PropTypes.func.isRequired,
-    updateTodo: PropTypes.func.isRequired,
-    cancelEdit: PropTypes.func.isRequired,
-    deleteTodo: PropTypes.func.isRequired,
-}
-function TodoList(props) {
+function TodoList() {
     const [isFeatureOneVisible,setFeatureOneVisible] = useToggle();
     const [isFeatureTwoVisible,setFeatureTwoVisible] = useToggle();
-    const {todosFiltered} = useContext(TodosContext)
+    const {todos, setTodos, todosFiltered} = useContext(TodosContext)
+
+    function deleteTodo(id) {
+        setTodos(todos.filter(todo => todo.id !== id));
+    }
+
+    function completeTodo(id) {
+        const updatedTodos = todos.map(todo => {
+            if (todo.id === id) {
+                todo.isComplete = !todo.isComplete;
+            }
+            return todo;
+        });
+
+        setTodos(updatedTodos);
+    }
+
+    function markAsEditing(id) {
+        const updatedTodos = todos.map(todo => {
+            if (todo.id === id) {
+                todo.isEditing = true;
+            }
+            return todo;
+        });
+
+        setTodos(updatedTodos);
+    }
+
+    function updateTodo(event, id) {
+        const updatedTodos = todos.map(todo => {
+            if (todo.id === id) {
+                if (event.target.value.trim().length === 0) {
+                    todo.isEditing = false;
+                    return todo;
+                }
+                todo.title = event.target.value;
+                todo.isEditing = false;
+            }
+            return todo;
+        });
+
+        setTodos(updatedTodos);
+    }
+
+    function cancelEdit(event, id) {
+        const updatedTodos = todos.map(todo => {
+            if (todo.id === id) {
+                todo.isEditing = false;
+            }
+            return todo;
+        });
+
+        setTodos(updatedTodos);
+    }
 
   return (
       <>
@@ -29,23 +73,23 @@ function TodoList(props) {
                   <input
                       checked={todo.isComplete}
                       type="checkbox"
-                      onChange={() => props.completeTodo(todo.id)}
+                      onChange={() => completeTodo(todo.id)}
                   />
                   {!todo.isEditing ? (
                       <span
-                          onDoubleClick={() => props.markAsEditing(todo.id)}
+                          onDoubleClick={() => markAsEditing(todo.id)}
                           className={`todo-item-label ${todo.isComplete ? 'line-through' : ''}`}
                       >
                         {todo.title}
                       </span>
                   ) : (
                       <input
-                          onBlur={event => props.updateTodo(event, todo.id)}
+                          onBlur={event => updateTodo(event, todo.id)}
                           onKeyDown={event => {
                             if (event.key === 'Enter') {
-                              props.updateTodo(event, todo.id);
+                              updateTodo(event, todo.id);
                             } else if (event.key === 'Escape') {
-                              props.cancelEdit(event, todo.id);
+                              cancelEdit(event, todo.id);
                             }
                           }}
                           type="text"
@@ -55,7 +99,7 @@ function TodoList(props) {
                       />
                   )}
                 </div>
-                <button onClick={() => props.deleteTodo(todo.id)} className="x-button">
+                <button onClick={() => deleteTodo(todo.id)} className="x-button">
                   <svg
                       className="x-button-icon"
                       fill="none"
