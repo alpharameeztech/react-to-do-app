@@ -13,7 +13,6 @@ import useToggle from "../hooks/useToggle";
     updateTodo: PropTypes.func.isRequired,
     cancelEdit: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
-    clearCompleted: PropTypes.func.isRequired,
     todosFiltered: PropTypes.func.isRequired,
 }
 function TodoList(props) {
@@ -99,7 +98,7 @@ function TodoList(props) {
                 todosFiltered={props.todosFiltered}
                 />
               <div>
-                  <TodoClearCompleted clearCompleted={props.clearCompleted} />
+                  <TodoClearCompleted />
               </div>
             </div>
           )}

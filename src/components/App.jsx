@@ -112,10 +112,6 @@ function App() {
     setTodos(updatedTodos);
   }
 
-  function clearCompleted(){
-    setTodos([...todos].filter(todo => !todo.isComplete))
-  }
-
   function todosFiltered(filter){
     if(filter === 'all'){
       return todos;
@@ -174,7 +170,6 @@ function App() {
                   updateTodo={updateTodo}
                   cancelEdit={cancelEdit}
                   deleteTodo={deleteTodo}
-                  clearCompleted={clearCompleted}
                   todosFiltered={todosFiltered}
               />
           ) : (
