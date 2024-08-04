@@ -5,9 +5,10 @@ import './Notodos';
 import Notodos from "./Notodos";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function App() {
-  const [todos, setTodos] = useState([
+  const [todos,setTodos] = useLocalStorage('todos',[
     {
       id: 1,
       title: 'Finish React Series',
@@ -27,9 +28,32 @@ function App() {
       isEditing: false,
     },
   ]);
+  // const [todos, setTodos] = useState([
+  //   {
+  //     id: 1,
+  //     title: 'Finish React Series',
+  //     isComplete: false,
+  //     isEditing: false,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Go Grocery',
+  //     isComplete: true,
+  //     isEditing: false,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Take over world',
+  //     isComplete: false,
+  //     isEditing: false,
+  //   },
+  // ]);
 
-  const [idForTodo, setIdForTodo] = useState(4);
-  const [name,setName] = useState();
+  const [idForTodo, setIdForTodo] = useLocalStorage('idForTodo',4);
+
+  // const [name,setName] = useState();
+  const [name,setName] = useLocalStorage('name','');
+
   const nameInputEl = useRef();
   function addTodo(todo) {
     setTodos([...todos, {
@@ -101,12 +125,12 @@ function App() {
   }
 
   function clearCompleted(){
-     setTodos([...todos].filter(todo => !todo.isComplete))
+    setTodos([...todos].filter(todo => !todo.isComplete))
   }
 
   function completeAllTodos(){
     const updatedTodos = todos.map(todo => {
-        todo.isComplete = true;
+      todo.isComplete = true;
       return todo;
     });
 
@@ -125,12 +149,12 @@ function App() {
   function handleNameInput(event) {
     const newName = event.target.value;
     setName(newName);
-    localStorage.setItem('name', JSON.stringify(newName));
+    // localStorage.setItem('name', JSON.stringify(newName));
   }
 
   useEffect(() => {
 
-    setName(JSON.parse(localStorage.getItem('name')) ?? '')
+    // setName(JSON.parse(localStorage.getItem('name')) ?? '')
 
     //this will run when any component unmount
     return function cleaningUp(){
@@ -148,14 +172,14 @@ function App() {
           <div className="name-container">
             <h2>What is your name?</h2>
             <form action='#'>
-                <input
+              <input
                   type="text"
                   ref={nameInputEl}
                   className="todo-input"
                   placeholder="What is your name?"
                   value={name}
                   onChange={handleNameInput}
-                />
+              />
             </form>
             {name && ( <p>My name is {name}</p>)}
 
@@ -163,18 +187,18 @@ function App() {
           <h2>Todo App</h2>
           <TodoForm addTodo={addTodo}/>
           {todos.length > 0 ? (
-            <TodoList
-              todos={todos}
-              completeTodo={completeTodo}
-              markAsEditing={markAsEditing}
-              updateTodo={updateTodo}
-              cancelEdit={cancelEdit}
-              deleteTodo={deleteTodo}
-              remaining={remaining}
-              clearCompleted={clearCompleted}
-              completeAllTodos={completeAllTodos}
-              todosFiltered={todosFiltered}
-            />
+              <TodoList
+                  todos={todos}
+                  completeTodo={completeTodo}
+                  markAsEditing={markAsEditing}
+                  updateTodo={updateTodo}
+                  cancelEdit={cancelEdit}
+                  deleteTodo={deleteTodo}
+                  remaining={remaining}
+                  clearCompleted={clearCompleted}
+                  completeAllTodos={completeAllTodos}
+                  todosFiltered={todosFiltered}
+              />
           ) : (
               <Notodos />
           )}
