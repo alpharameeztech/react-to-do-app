@@ -5,7 +5,7 @@ import CompleteAllTodos from "./CompleteAllTodos";
 import TodoFilters from "./TodoFilters";
 import useToggle from "../hooks/useToggle";
 import {TodosContext} from "../context/TodosContext";
-import {CSSTransition} from "react-transition-group";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 function TodoList() {
     const [isFeatureOneVisible,setFeatureOneVisible] = useToggle();
@@ -67,8 +67,13 @@ function TodoList() {
 
   return (
       <>
-        <ul className="todo-list">
+        <TransitionGroup component="ul" className="todo-list">
           {todosFiltered().map((todo) => (
+              <CSSTransition
+                  key={todo.id}
+                  timeout={300}
+                  classNames="slide-horizontal"
+              >
               <li key={todo.id} className="todo-item-container">
                 <div className="todo-item">
                   <input
@@ -116,8 +121,9 @@ function TodoList() {
                   </svg>
                 </button>
               </li>
+              </CSSTransition>
           ))}
-        </ul>
+        </TransitionGroup>
 
           <div className="toggle-container">
               <button
