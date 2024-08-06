@@ -5,6 +5,7 @@ import CompleteAllTodos from "./CompleteAllTodos";
 import TodoFilters from "./TodoFilters";
 import useToggle from "../hooks/useToggle";
 import {TodosContext} from "../context/TodosContext";
+import {CSSTransition} from "react-transition-group";
 
 function TodoList() {
     const [isFeatureOneVisible,setFeatureOneVisible] = useToggle();
@@ -125,23 +126,33 @@ function TodoList() {
                   onClick={setFeatureTwoVisible} className="button">Feature Two Toggle</button>
           </div>
 
-          { isFeatureOneVisible && (
+          <CSSTransition
+              in={isFeatureOneVisible}
+              timeout={300}
+              classNames="slide-vertical"
+              unmountOnExit
+          >
             <div className="check-all-container">
               <div>
                 <CompleteAllTodos />
               </div>
                 <TodoItemsRemaining />
             </div>
-          )}
+          </CSSTransition>
 
-          { isFeatureTwoVisible && (
+          <CSSTransition
+              in={isFeatureTwoVisible}
+              timeout={300}
+              classNames="slide-vertical"
+              unmountOnExit
+          >
             <div className="other-buttons-container">
                 <TodoFilters />
               <div>
                   <TodoClearCompleted />
               </div>
             </div>
-          )}
+          </CSSTransition>
       </>
   )
 }
