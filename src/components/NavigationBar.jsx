@@ -16,6 +16,9 @@ export default function NavigationBar() {
                 <li>
                     <NavLink to='/contact' className={({ isActive }) => (isActive ? 'active' : '')}>Contact</NavLink>
                 </li>
+                <li>
+                    <NavLink to='/blog' className={({ isActive }) => (isActive ? 'active' : '')}>Blog</NavLink>
+                </li>
             </ul>
         </nav>
     </div>

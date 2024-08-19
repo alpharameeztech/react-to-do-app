@@ -186,3 +186,11 @@ nav ul{
 nav ul li:not(:first-child){
   margin-left: 16px;
 }
+.container{
+  width: 500px;
+  margin:0 auto;
+  margin-top: 15px;
+}
+.name-container{
+  margin-bottom: 2em;
+}
