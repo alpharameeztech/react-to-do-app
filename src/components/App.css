@@ -16,6 +16,10 @@ body {
   background: #f3f4f6;
 }
 
+.active{
+  font-weight: bold;
+}
+
 .todo-app {
   margin: auto;
   margin-top: 30px;
