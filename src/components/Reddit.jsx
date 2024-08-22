@@ -1,9 +1,25 @@
 import React from 'react'
-import useFetch from "../hooks/useFetch";
+import {useQuery} from "@tanstack/react-query";
 
 export default function Reddit() {
 
-    const {data: posts,isLoading,errorMessage} = useFetch('https://www.reddit.com/r/aww.json');
+    const {
+        data: posts,
+        isLoading,
+        isError,
+        error,
+        isSuccess
+    } = useQuery({
+        queryKey: ['posts'],
+        queryFn: fetchPosts,
+        staleTime: 6000,
+    });
+
+    function fetchPosts(){
+        return fetch('https://www.reddit.com/r/aww.json').then(response =>
+            response.json()
+        );
+    }
 
   return (
     <div>
@@ -13,7 +29,7 @@ export default function Reddit() {
             <p>Loading...</p>
         </div>
         )}
-        {posts && (
+        {isSuccess && (
         <ul>
             {posts.data.children.map(post =>
             <li>
@@ -25,9 +41,9 @@ export default function Reddit() {
         </ul>
         )}
 
-        { errorMessage && (
+        { isError && (
             <div>
-                <p>{errorMessage}</p>
+                <p>{error.message}</p>
             </div>
         )}
     </div>
