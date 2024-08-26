@@ -7,8 +7,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 [Watch the demo video](public/screen.mp4)
 
-![Demo](public/screen.gif)
-
 ## Available Scripts
 
 In the project directory, you can run:
