@@ -7,10 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 [Watch the demo video](public/screen.mp4)
 
-<video width="600" autoplay loop muted playsinline>
-  <source src="public/screen.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+![Demo](public/screen.gif)
 
 ## Available Scripts
 
