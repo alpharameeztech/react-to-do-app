@@ -13,13 +13,13 @@ function App() {
   const [todos,setTodos] = useLocalStorage('todos',[
     {
       id: 1,
-      title: 'Finish React Series',
+      title: 'Play table tennis',
       isComplete: false,
       isEditing: false,
     },
     {
       id: 2,
-      title: 'Go Grocery',
+      title: 'Go for Grocery',
       isComplete: true,
       isEditing: false,
     },
@@ -30,26 +30,6 @@ function App() {
       isEditing: false,
     },
   ]);
-  // const [todos, setTodos] = useState([
-  //   {
-  //     id: 1,
-  //     title: 'Finish React Series',
-  //     isComplete: false,
-  //     isEditing: false,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Go Grocery',
-  //     isComplete: true,
-  //     isEditing: false,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'Take over world',
-  //     isComplete: false,
-  //     isEditing: false,
-  //   },
-  // ]);
 
   const [filter,setFilter] = useState('all');
 
